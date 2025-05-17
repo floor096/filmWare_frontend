@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Cines y Sucursales</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="componentes/navbar.css">
+    <style>
+        :root {
+            --dark-bg: #0A0A16;
+            --card-bg: #141428;
+            --accent: #00d2e6;
+            --accent-gradient: linear-gradient(90deg, #00d2e6, #5d3fff);
+            --text-color: #ffffff;
+            --secondary-text: #aaaaaa;
+            --primary-color: #00E5FF;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .page-header {
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            margin-top: 100px;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .page-title span {
+            color: var(--accent);
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: none;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-control, .form-select {
+            background-color: #1c1c28;
+            border: 1px solid #2a2a3a;
+            color: var(--text-color);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: #1c1c28;
+            border-color: var(--accent);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.25rem rgba(0, 210, 230, 0.25);
+        }
+
+        .form-control::placeholder {
+            color: #666;
+        }
+        
+        .form-label {
+            color: var(--secondary-text);
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+        }
+        
+        .card-title {
+            color: var(--text-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            color: var(--text-color);
+            font-weight: 600;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.2rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 8px;
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 229, 255, 0.3);
+        }
+
+        .btn-outline-light {
+            border-color: #2a2a3a;
+            color: var(--secondary-text);
+        }
+        
+        .btn-outline-light:hover {
+            background-color: #2a2a3a;
+            border-color: #2a2a3a;
+        }
+        
+        .btn-add-more {
+            background-color: transparent;
+            border: 2px dashed #2a2a3a;
+            color: var(--accent);
+            border-radius: 8px;
+            padding: 0.6rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-add-more:hover {
+            background-color: rgba(0, 210, 230, 0.1);
+            border-color: var(--accent);
+        }
+        
+        .badge-format {
+            background-color: #1c1c28;
+            color: var(--secondary-text);
+            border-radius: 6px;
+            padding: 0.4rem 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .sucursal-item {
+            background-color: #1c1c28;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .sucursal-item .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .sucursal-item .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .sucursal-item .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .sucursal-item .details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+        }
+
+        .sucursal-item .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .delete-btn {
+            color: #ff4d6d;
+            background: transparent;
+            border: none;
+            font-size: 1rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .delete-btn:hover {
+            background-color: rgba(255, 77, 109, 0.1);
+        }
+
+        .edit-btn {
+            color: var(--accent);
+            background: transparent;
+            border: none;
+            font-size: 1rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .edit-btn:hover {
+            background-color: rgba(0, 210, 230, 0.1);
+        }
+
+        .sucursales-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        /* Estilizar scrollbar */
+        .sucursales-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sucursales-container::-webkit-scrollbar-track {
+            background: #1c1c28;
+            border-radius: 10px;
+        }
+
+        .sucursales-container::-webkit-scrollbar-thumb {
+            background: #2a2a3a;
+            border-radius: 10px;
+        }
+
+        .sucursales-container::-webkit-scrollbar-thumb:hover {
+            background: #3a3a4a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="navbar"></div>
+    <!-- Container -->
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Gestión de <span>Cines</span></h1>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- Formulario de registro de cine -->
+                <div class="card">
+                    <h3 class="card-title">Registrar Nuevo Cine</h3>
+                    <form id="cineForm">
+                        <div class="mb-2">
+                            <label for="nombreCine" class="form-label">Nombre del cine</label>
+                            <input type="text" class="form-control" id="nombreCine" name="nombreCine" placeholder="Ej: Cinépolis" required>
+                        </div>
+                        
+                        <div class="mb-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="telefono" class="form-label">Teléfono de contacto</label>
+                                    <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ej: +54 11 4555-1234">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email de contacto</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Ej: contacto@cinepolis.com">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-end mt-4 mb-2">
+                            <button type="submit" class="btn btn-primary">Registrar Cine</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <!-- Formulario de registro de sucursal -->
+                <div class="card">
+                    <h3 class="card-title">Registrar Sucursal</h3>
+                    <form id="sucursalForm">
+                        <div class="mb-3">
+                            <label for="cineSelect" class="form-label">Seleccionar Cine</label>
+                            <select class="form-select" id="cineSelect" name="cineId" required>
+                                <option value="" selected disabled>Seleccionar cine...</option>
+                                <option value="1">Cinépolis</option>
+                                <option value="2">Showcase</option>
+                                <option value="3">Hoyts</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="nombreSucursal" class="form-label">Nombre de la sucursal</label>
+                            <input type="text" class="form-control" id="nombreSucursal" name="nombreSucursal" placeholder="Ej: Plaza Central" required>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="numSalas" class="form-label">Número de salas</label>
+                                <input type="number" class="form-control" id="numSalas" name="numSalas" min="1" max="30" placeholder="Ej: 8" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="capacidadTotal" class="form-label">Capacidad total</label>
+                                <input type="number" class="form-control" id="capacidadTotal" name="capacidadTotal" min="1" placeholder="Ej: 1200" required>
+                            </div>
+                        </div>
+                        
+                        <h4 class="section-title">Dirección de la Sucursal</h4>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="calle" class="form-label">Calle</label>
+                                <input type="text" class="form-control" id="calle" name="calle" placeholder="Ej: Av. Corrientes" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="numero" class="form-label">Número</label>
+                                <input type="text" class="form-control" id="numero" name="numero" placeholder="Ej: 1234" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="localidad" class="form-label">Localidad</label>
+                                <input type="text" class="form-control" id="localidad" name="localidad" placeholder="Ej: Balvanera" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="ciudad" class="form-label">Ciudad</label>
+                                <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Ej: Buenos Aires" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="provincia" class="form-label">Provincia</label>
+                                <input type="text" class="form-control" id="provincia" name="provincia" placeholder="Ej: CABA" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="codigoPostal" class="form-label">Código Postal</label>
+                            <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" placeholder="Ej: C1043AAZ">
+                        </div>
+                        
+                        <h4 class="section-title">Formatos Disponibles</h4>
+                        <div class="mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="formato2D" name="formatos" value="2D">
+                                <label class="form-check-label" for="formato2D">2D</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="formato3D" name="formatos" value="3D">
+                                <label class="form-check-label" for="formato3D">3D</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="formatoIMAX" name="formatos" value="IMAX">
+                                <label class="form-check-label" for="formatoIMAX">IMAX</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="formato4DX" name="formatos" value="4DX">
+                                <label class="form-check-label" for="formato4DX">4DX</label>
+                            </div>
+                        </div>
+                        
+                        <div class="text-end mt-4 mb-2">
+                            <button type="submit" class="btn btn-primary">Registrar Sucursal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Sucursales Registradas -->
+        <div class="card mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="card-title mb-0">Sucursales Registradas</h3>
+                <div class="input-group" style="max-width: 300px;">
+                    <input type="text" class="form-control" placeholder="Buscar sucursal..." id="searchSucursal">
+                    <button class="btn btn-outline-light" type="button" id="btnSearch">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="sucursales-container" id="sucursalesList">
+                <!-- Ejemplo de sucursal -->
+                <div class="sucursal-item">
+                    <div class="header">
+                        <span class="title">Cinépolis Plaza Central</span>
+                        <div class="actions">
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Av. Corrientes 1234, Balvanera, Buenos Aires</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-film"></i>
+                            <span>8 salas</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>1200 espectadores</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-tag"></i>
+                            <span>2D, 3D, IMAX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sucursal-item">
+                    <div class="header">
+                        <span class="title">Showcase Haedo</span>
+                        <div class="actions">
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Rivadavia 15100, Haedo, Buenos Aires</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-film"></i>
+                            <span>12 salas</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>2400 espectadores</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-tag"></i>
+                            <span>2D, 3D, 4DX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sucursal-item">
+                    <div class="header">
+                        <span class="title">Hoyts Abasto</span>
+                        <div class="actions">
+                            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Av. Corrientes 3247, Abasto, Buenos Aires</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-film"></i>
+                            <span>10 salas</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>1800 espectadores</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-tag"></i>
+                            <span>2D, 3D, IMAX</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="include.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referencias a los formularios
+            const cineForm = document.getElementById('cineForm');
+            const sucursalForm = document.getElementById('sucursalForm');
+            const sucursalesList = document.getElementById('sucursalesList');
+            const searchInput = document.getElementById('searchSucursal');
+            
+            // Almacenamiento local para cines y sucursales
+            let cines = JSON.parse(localStorage.getItem('cines')) || [];
+            let sucursales = JSON.parse(localStorage.getItem('sucursales')) || [];
+            
+            // Función para guardar en localStorage
+            function saveData() {
+                localStorage.setItem('cines', JSON.stringify(cines));
+                localStorage.setItem('sucursales', JSON.stringify(sucursales));
+            }
+            
+            // Función para actualizar el select de cines
+            function updateCineSelect() {
+                const cineSelect = document.getElementById('cineSelect');
+                // Limpiar opciones actuales excepto la primera
+                cineSelect.innerHTML = '<option value="" selected disabled>Seleccionar cine...</option>';
+                
+                // Agregar cines de la lista
+                cines.forEach(cine => {
+                    const option = document.createElement('option');
+                    option.value = cine.id;
+                    option.textContent = cine.nombre;
+                    cineSelect.appendChild(option);
+                });
+            }
+            
+            // Función para renderizar la lista de sucursales
+            function renderSucursales(filteredList = null) {
+                const list = filteredList || sucursales;
+                sucursalesList.innerHTML = '';
+                
+                if (list.length === 0) {
+                    sucursalesList.innerHTML = '<p class="text-center text-secondary py-4">No hay sucursales registradas</p>';
+                    return;
+                }
+                
+                list.forEach(sucursal => {
+                    // Encontrar el cine asociado
+                    const cine = cines.find(c => c.id === sucursal.cineId);
+                    const nombreCompleto = cine ? `${cine.nombre} ${sucursal.nombre}` : sucursal.nombre;
+                    
+                    // Crear el elemento de sucursal
+                    const sucursalElement = document.createElement('div');
+                    sucursalElement.className = 'sucursal-item';
+                    sucursalElement.innerHTML = `
+                        <div class="header">
+                            <span class="title">${nombreCompleto}</span>
+                            <div class="actions">
+                                <button class="edit-btn" data-id="${sucursal.id}"><i class="fas fa-edit"></i></button>
+                                <button class="delete-btn" data-id="${sucursal.id}"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${sucursal.calle} ${sucursal.numero}, ${sucursal.localidad}, ${sucursal.ciudad}</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-film"></i>
+                                <span>${sucursal.numSalas} salas</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-users"></i>
+                                <span>${sucursal.capacidadTotal} espectadores</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-tag"></i>
+                                <span>${sucursal.formatos.join(', ')}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Añadir a la lista
+                    sucursalesList.appendChild(sucursalElement);
+                    
+                    // Añadir listeners para editar y eliminar
+                    const deleteBtn = sucursalElement.querySelector('.delete-btn');
+                    deleteBtn.addEventListener('click', () => deleteSucursal(sucursal.id));
+                    
+                    const editBtn = sucursalElement.querySelector('.edit-btn');
+                    editBtn.addEventListener('click', () => editSucursal(sucursal.id));
+                });
+            }
+            
+            // Manejo del formulario de cine
+            cineForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Generar un ID único
+                const cineId = Date.now().toString();
+                
+                // Crear objeto cine
+                const newCine = {
+                    id: cineId,
+                    nombre: document.getElementById('nombreCine').value,
+                    telefono: document.getElementById('telefono').value,
+                    email: document.getElementById('email').value
+                };
+                
+                // Añadir a la lista y guardar
+                cines.push(newCine);
+                saveData();
+                
+                // Actualizar select de cines
+                updateCineSelect();
+                
+                // Resetear formulario
+                cineForm.reset();
+                
+                // Mostrar confirmación
+                alert('Cine registrado correctamente');
+            });
+            
+            // Manejo del formulario de sucursal
+            sucursalForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Recoger formatos seleccionados
+                const formatosChecked = Array.from(
+                    document.querySelectorAll('input[name="formatos"]:checked')
+                ).map(checkbox => checkbox.value);
+                
+                // Generar ID único
+                const sucursalId = Date.now().toString();
+                
+                // Crear objeto sucursal
+                const newSucursal = {
+                    id: sucursalId,
+                    cineId: document.getElementById('cineSelect').value,
+                    nombre: document.getElementById('nombreSucursal').value,
+                    numSalas: document.getElementById('numSalas').value,
+                    capacidadTotal: document.getElementById('capacidadTotal').value,
+                    calle: document.getElementById('calle').value,
+                    numero: document.getElementById('numero').value,
+                    localidad: document.getElementById('localidad').value,
+                    ciudad: document.getElementById('ciudad').value,
+                    provincia: document.getElementById('provincia').value,
+                    codigoPostal: document.getElementById('codigoPostal').value,
+                    formatos: formatosChecked.length > 0 ? formatosChecked : ['2D']
+                };
+                
+                // Añadir a la lista y guardar
+                sucursales.push(newSucursal);
+                saveData();
+                
+                // Renderizar sucursales
+                renderSucursales();
+                
+                // Resetear formulario
+                sucursalForm.reset();
+                
+                // Mostrar confirmación
+                alert('Sucursal registrada correctamente');
+            });
+            
+            // Función para eliminar sucursal
+            function deleteSucursal(id) {
+                if (confirm('¿Estás seguro de que deseas eliminar esta sucursal?')) {
+                    sucursales = sucursales.filter(s => s.id !== id);
+                    saveData();
+                    renderSucursales();
+                }
+            }
+            
+            // Función para editar sucursal (cargar datos en el formulario)
+            function editSucursal(id) {
+                const sucursal = sucursales.find(s => s.id === id);
+                if (!sucursal) return;
+                
+                // Completar el formulario con los datos
+                document.getElementById('cineSelect').value = sucursal.cineId;
+                document.getElementById('nombreSucursal').value = sucursal.nombre;
+                document.getElementById('numSalas').value = sucursal.numSalas;
+                document.getElementById('capacidadTotal').value = sucursal.capacidadTotal;
+                document.getElementById('calle').value = sucursal.calle;
+                document.getElementById('numero').value = sucursal.numero;
+                document.getElementById('localidad').value = sucursal.localidad;
+                document.getElementById('ciudad').value = sucursal.ciudad;
+                document.getElementById('provincia').value = sucursal.provincia;
+                document.getElementById('codigoPostal').value = sucursal.codigoPostal;
+                
+                // Resetear checkboxes
+                document.querySelectorAll('input[name="formatos"]').forEach(cb => cb.checked = false);
+                
+                // Marcar formatos
+                sucursal.formatos.forEach(formato => {
+                    const checkbox = document.getElementById(`formato${formato}`);
+                    if (checkbox) checkbox.checked = true;
+                });
+                
+                // Eliminar la sucursal y modificar el formulario para actualizar
+                sucursales = sucursales.filter(s => s.id !== id);
+                
+                // Scroll hasta el formulario
+                sucursalForm.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // Búsqueda de sucursales
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                if (!searchTerm) {
+                    renderSucursales();
+                    return;
+                }
+                
+                const filteredSucursales = sucursales.filter(sucursal => {
+                    const cine = cines.find(c => c.id === sucursal.cineId);
+                    const nombreCompleto = cine ? `${cine.nombre} ${sucursal.nombre}` : sucursal.nombre;
+                    
+                    return nombreCompleto.toLowerCase().includes(searchTerm) ||
+                           sucursal.ciudad.toLowerCase().includes(searchTerm) ||
+                           sucursal.localidad.toLowerCase().includes(searchTerm);
+                });
+                
+                renderSucursales(filteredSucursales);
+            });
+            
+            // Inicializar la interfaz
+            updateCineSelect();
+            renderSucursales();
+        });
+    </script>
+</body>
+</html>

@@ -130,4 +130,28 @@ document.addEventListener('DOMContentLoaded', function () {
             loginTabBtn?.click();
         });
     }
+
+    // ========================
+    // Registro Cine y Sucursales
+    // ========================
+    if (registerForm) {
+        registerForm.addEventListener("submit", function (e) {
+            e.preventDefault(); // Evita el envío por defecto
+
+            const userType = document.getElementById("userType").value;
+
+            // Simulás guardar datos, mostrar mensaje, etc.
+            alert("Registro exitoso");
+
+            // Redireccionar según tipo de usuario
+            if (userType === "administrador") {
+                window.location.href = "registro-cine-sucursal.html";
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+    }
+    
 });
+
+  
