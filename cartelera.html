@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cartelera - CinePulse</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="componentes/navbar.css">
+    <link rel="stylesheet" href="componentes/footer.css">
     <style>
         :root {
             --color-dark: #0a0b14;
@@ -19,69 +21,8 @@
             color: white;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        /* Header y Navegación */
-        .navbar {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 50;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            background-color: rgba(15, 15, 26, 0.8);
-            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-            padding: 0.75rem 0;
-        }
-
-        .logo-cyan {
-            color: #00FFFF; 
-        }
-
-        .logo-magenta {
-            color: #FF00FF;
-        }
-
-        .navbar-brand {
-            font-size: 1.75rem;
-            font-weight: 700;
-        }
-
-        .nav-link {
-            color: #F8F8F8 !important;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #00FFFF !important;
-        }
-
-        .btn-login {
-            color: #F8F8F8;
-            border: 1px solid rgba(248, 248, 248, 0.3);
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            padding: 0.375rem 1rem;
-        }
-
-        .btn-login:hover {
-            border-color: #00FFFF;
-            color: #00FFFF;
-        }
-
-        .btn-register {
-            background-color: #00FFFF;
-            color: #0F0F1A;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            padding: 0.375rem 1.25rem;
-        }
-
-        .btn-register:hover {
-            background-color: rgba(0, 255, 255, 0.9);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
-        }
         
+        /* contenido */
         .page-title {
             font-size: 2.5rem;
             font-weight: bold;
@@ -270,123 +211,12 @@
         .page-item.active .page-link {
             font-weight: bold;
         }
-        /* Footer */
-        .footer {
-        background-color: #1C1C2E;
-        border-top: 1px solid rgba(0, 255, 255, 0.2);
-        padding: 3rem 0 0;
-        }
 
-        .footer p {
-        color: rgba(248, 248, 248, 0.7);
-        }
-
-        .social-links {
-        display: flex;
-        gap: 1rem;
-        }
-
-        .social-link {
-        color: rgba(248, 248, 248, 0.7);
-        font-size: 1.125rem;
-        transition: color 0.3s ease;
-        }
-
-        .social-link:hover {
-        color: #00FFFF;
-        }
-
-        .footer-heading {
-        font-size: 1.125rem;
-        margin-bottom: 1.25rem;
-        }
-
-        .footer-links {
-        list-style: none;
-        padding-left: 0;
-        }
-
-        .footer-links li {
-        margin-bottom: 0.75rem;
-        }
-
-        .footer-link {
-        color: rgba(248, 248, 248, 0.7);
-        transition: color 0.3s ease;
-        text-decoration: none;
-        }
-
-        .footer-link:hover {
-        color: #00FFFF;
-        }
-
-        .contact-item {
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 0.75rem;
-        }
-
-        .contact-icon {
-        color: #00FFFF;
-        margin-right: 0.75rem;
-        margin-top: 0.25rem;
-        }
-
-        .contact-text {
-        color: rgba(248, 248, 248, 0.7);
-        }
-
-        .footer-bottom {
-        margin-top: 3rem;
-        padding: 1.5rem 0;
-        text-align: center;
-        border-top: 1px solid rgba(248, 248, 248, 0.1);
-        color: rgba(248, 248, 248, 0.5);
-        font-size: 0.875rem;
-        }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <!-- Logo -->
-                <a href="#" class="navbar-brand">
-                    <span class="logo-cyan">Film</span><span class="logo-magenta">Ware</span>
-                </a>
-
-                <!-- Mobile Toggle Button -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon">
-                        <i class="fas fa-bars text-white"></i>
-                    </span>
-                </button>
-
-                <!-- Navigation Items -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto align-items-center">
-                        <li class="nav-item">
-                            <a href="index.html" class="nav-link">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="cartelera.html" class="nav-link">Cartelera</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="cines.html" class="nav-link">Cines</a>
-                        </li>
-                        <li class="nav-item ms-2">
-                            <a href="login.html" class="btn btn-login">Iniciar sesión</a>
-                        </li>
-                        <li class="nav-item ms-2">
-                            <a href="login.html" class="btn btn-register">Registrarse</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <div id="navbar"></div>
     
 
     <!-- Main Content -->
@@ -426,21 +256,18 @@
                             <option value="" selected>Todos los formatos</option>
                             <option value="2d">2D</option>
                             <option value="3d">3D</option>
-                            <option value="2d-subtitulada">2D Subtitulada</option>
-                            <option value="2d-doblada">2D Doblada</option>
-                            <option value="3d-subtitulada">3D Subtitulada</option>
-                            <option value="3d-doblada">3D Doblada</option>
+                            <option value="imax">IMAX</option>
+                            <option value="4dx">4DX</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="idioma" class="form-label">Idioma</label>
                         <select class="form-select" id="idioma">
                             <option value="" selected>Todos los idiomas</option>
-                            <option value="espanol">Español</option>
-                            <option value="ingles">Inglés</option>
-                            <option value="frances">Francés</option>
-                            <option value="italiano">Italiano</option>
-                            <option value="japones">Japonés</option>
+                            <option value="esp">Español</option>
+                            <option value="esp-sub">Subtitulada (ESP)</option>
+                            <option value="eng">Inglés</option>
+                            <option value="eng-sub">Subtitulada (ENG)</option>
                         </select>
                     </div>
                 </div>
@@ -474,70 +301,10 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row gy-4">
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-brand mb-4">
-                        <a href="#" class="navbar-brand">
-                            <span class="logo-cyan">Film</span><span class="logo-magenta">Ware</span>
-                        </a>
-                        <p class="mt-3 mb-4">Tu destino digital para la mejor experiencia cinematográfica.</p>
-                        <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="footer-heading">Navegación</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" class="footer-link">Inicio</a></li>
-                        <li><a href="cartelera.html" class="footer-link">Cartelera</a></li>
-                        <li><a href="cines.html" class="footer-link">Cines</a></li>
-                        <li><a href="#" class="footer-link">Estrenos</a></li>
-                        <li><a href="#" class="footer-link">Promociones</a></li>
-                    </ul>
-                </div>
-    
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="footer-heading">Legal</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" class="footer-link">Términos y condiciones</a></li>
-                        <li><a href="#" class="footer-link">Política de privacidad</a></li>
-                        <li><a href="#" class="footer-link">Política de cookies</a></li>
-                        <li><a href="#" class="footer-link">FAQ</a></li>
-                    </ul>
-                </div>
-    
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="footer-heading">Contacto</h4>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt contact-icon"></i>
-                        <span class="contact-text">Av. del Cine 123, Ciudad</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone contact-icon"></i>
-                        <span class="contact-text">+123 456 789</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope contact-icon"></i>
-                        <span class="contact-text">info@filmware.com</span>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="footer-bottom">
-                <p>&copy; <span id="current-year"></span> FilmWare. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
+    <div id="footer"></div>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="include.js"></script>
     <script>
         // Sample data for movies
         const moviesData = [
@@ -631,7 +398,7 @@
                             <span>${movie.format}</span>
                             <span>${movie.language}</span>
                         </div>
-                        <button class="btn btn-buy"><a href="/front/pelicula-page.html">Comprar entradas</a></button>
+                        <button class="btn btn-buy"><a href="pelicula-page.html">Comprar entradas</a></button>
                     </div>
                 `;
                 container.appendChild(movieCard);

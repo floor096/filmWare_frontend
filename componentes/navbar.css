@@ -1,0 +1,63 @@
+/* Header y Navegación */
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(15, 15, 26, 0.8);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+    padding: 0.75rem 0;
+}
+
+.logo-cyan {
+    color: #00FFFF; 
+}
+
+.logo-magenta {
+    color: #FF00FF;
+}
+
+.navbar-brand {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.nav-link {
+    color: #F8F8F8 !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #00FFFF !important;
+}
+
+.btn-login {
+    color: #F8F8F8;
+    border: 1px solid rgba(248, 248, 248, 0.3);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    padding: 0.375rem 1rem;
+}
+
+.btn-login:hover {
+    border-color: #00FFFF;
+    color: #00FFFF;
+}
+
+.btn-register {
+    background-color: #00FFFF;
+    color: #0F0F1A;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    padding: 0.375rem 1.25rem;
+}
+
+.btn-register:hover {
+    background-color: rgba(0, 255, 255, 0.9);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+}
+
