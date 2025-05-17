@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartelera - CinePulse</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-dark: #0a0b14;
+            --color-darker: #060714;
+            --color-cyan: #00e1ff;
+            --color-magenta: #ff00e5;
+            --color-purple: #5e0b9e;
+        }
+        
+        body {
+            background-color: var(--color-dark);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* Header y Navegación */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(15, 15, 26, 0.8);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 0.75rem 0;
+        }
+
+        .logo-cyan {
+            color: #00FFFF; 
+        }
+
+        .logo-magenta {
+            color: #FF00FF;
+        }
+
+        .navbar-brand {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: #F8F8F8 !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #00FFFF !important;
+        }
+
+        .btn-login {
+            color: #F8F8F8;
+            border: 1px solid rgba(248, 248, 248, 0.3);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            padding: 0.375rem 1rem;
+        }
+
+        .btn-login:hover {
+            border-color: #00FFFF;
+            color: #00FFFF;
+        }
+
+        .btn-register {
+            background-color: #00FFFF;
+            color: #0F0F1A;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            padding: 0.375rem 1.25rem;
+        }
+
+        .btn-register:hover {
+            background-color: rgba(0, 255, 255, 0.9);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 30px 0;
+            margin-top: 100px;;
+        }
+        
+        .page-title .highlight {
+            color: var(--color-cyan);
+        }
+        
+        .search-container {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .search-container label {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .form-control, .form-select {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 8px;
+            padding: 12px 15px;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: rgba(255, 255, 255, 0.12);
+            border-color: var(--color-cyan);
+            box-shadow: 0 0 0 0.25rem rgba(0, 225, 255, 0.25);
+            color: white;
+        }
+        
+        .form-select option {
+            background-color: var(--color-darker);
+            color: white;
+        }
+        
+        .btn-search {
+            background-color: var(--color-cyan);
+            color: var(--color-darker);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn-search:hover {
+            background-color: #00b5cc;
+            transform: translateY(-2px);
+        }
+        
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        @media (max-width: 1200px) {
+            .movie-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .movie-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .movie-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .movie-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .movie-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 225, 255, 0.2);
+        }
+        
+        .movie-poster {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 2/3;
+        }
+        
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .movie-card:hover .movie-poster img {
+            transform: scale(1.05);
+        }
+        
+        .movie-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .movie-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .movie-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: auto;
+        }
+        .btn-buy a {
+            text-decoration: none;
+            color: white;
+        }
+        .btn-buy {
+            background: linear-gradient(90deg, var(--color-cyan), var(--color-magenta));
+            color: white;
+            border: none;
+            padding: 8px 0;
+            border-radius: 6px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        
+        .btn-buy:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .pagination-container {
+            margin: 40px 0;
+        }
+        
+        .page-link {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            margin: 0 5px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .page-link:hover, .page-item.active .page-link {
+            background-color: var(--color-cyan);
+            border-color: var(--color-cyan);
+            color: var(--color-darker);
+        }
+        
+        .page-item.active .page-link {
+            font-weight: bold;
+        }
+        /* Footer */
+        .footer {
+        background-color: #1C1C2E;
+        border-top: 1px solid rgba(0, 255, 255, 0.2);
+        padding: 3rem 0 0;
+        }
+
+        .footer p {
+        color: rgba(248, 248, 248, 0.7);
+        }
+
+        .social-links {
+        display: flex;
+        gap: 1rem;
+        }
+
+        .social-link {
+        color: rgba(248, 248, 248, 0.7);
+        font-size: 1.125rem;
+        transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+        color: #00FFFF;
+        }
+
+        .footer-heading {
+        font-size: 1.125rem;
+        margin-bottom: 1.25rem;
+        }
+
+        .footer-links {
+        list-style: none;
+        padding-left: 0;
+        }
+
+        .footer-links li {
+        margin-bottom: 0.75rem;
+        }
+
+        .footer-link {
+        color: rgba(248, 248, 248, 0.7);
+        transition: color 0.3s ease;
+        text-decoration: none;
+        }
+
+        .footer-link:hover {
+        color: #00FFFF;
+        }
+
+        .contact-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 0.75rem;
+        }
+
+        .contact-icon {
+        color: #00FFFF;
+        margin-right: 0.75rem;
+        margin-top: 0.25rem;
+        }
+
+        .contact-text {
+        color: rgba(248, 248, 248, 0.7);
+        }
+
+        .footer-bottom {
+        margin-top: 3rem;
+        padding: 1.5rem 0;
+        text-align: center;
+        border-top: 1px solid rgba(248, 248, 248, 0.1);
+        color: rgba(248, 248, 248, 0.5);
+        font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <!-- Logo -->
+                <a href="#" class="navbar-brand">
+                    <span class="logo-cyan">Film</span><span class="logo-magenta">Ware</span>
+                </a>
+
+                <!-- Mobile Toggle Button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="fas fa-bars text-white"></i>
+                    </span>
+                </button>
+
+                <!-- Navigation Items -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="cartelera.html" class="nav-link">Cartelera</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="cines.html" class="nav-link">Cines</a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a href="login.html" class="btn btn-login">Iniciar sesión</a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a href="login.html" class="btn btn-register">Registrarse</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Title -->
+        <h1 class="page-title">Explora nuestra <span class="highlight">cartelera</span></h1>
+        
+        <!-- Search Form -->
+        <div class="search-container">
+            <form id="filterForm">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label for="complejo" class="form-label">Complejo</label>
+                        <select class="form-select" id="complejo">
+                            <option value="" selected>Todos los complejos</option>
+                            <option value="1">FilmWare Centro</option>
+                            <option value="2">FilmWare Plaza</option>
+                            <option value="3">FilmWare Premium</option>
+                            <option value="4">FilmWare Norte</option>
+                            <option value="5">FilmWare Sur</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="sala" class="form-label">Sala</label>
+                        <select class="form-select" id="sala">
+                            <option value="" selected>Todas las salas</option>
+                            <option value="standard">Estándar</option>
+                            <option value="vip">VIP</option>
+                            <option value="premium">Premium</option>
+                            <option value="4dx">4DX</option>
+                            <option value="imax">IMAX</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="formato" class="form-label">Formato</label>
+                        <select class="form-select" id="formato">
+                            <option value="" selected>Todos los formatos</option>
+                            <option value="2d">2D</option>
+                            <option value="3d">3D</option>
+                            <option value="2d-subtitulada">2D Subtitulada</option>
+                            <option value="2d-doblada">2D Doblada</option>
+                            <option value="3d-subtitulada">3D Subtitulada</option>
+                            <option value="3d-doblada">3D Doblada</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="idioma" class="form-label">Idioma</label>
+                        <select class="form-select" id="idioma">
+                            <option value="" selected>Todos los idiomas</option>
+                            <option value="espanol">Español</option>
+                            <option value="ingles">Inglés</option>
+                            <option value="frances">Francés</option>
+                            <option value="italiano">Italiano</option>
+                            <option value="japones">Japonés</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-search">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Movie Grid -->
+        <div class="movie-grid" id="moviesContainer">
+            <!-- Movie cards will be dynamically generated here -->
+        </div>
+        
+        <!-- Pagination -->
+        <nav aria-label="Navegación de páginas">
+            <ul class="pagination justify-content-center pagination-container">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-brand mb-4">
+                        <a href="#" class="navbar-brand">
+                            <span class="logo-cyan">Film</span><span class="logo-magenta">Ware</span>
+                        </a>
+                        <p class="mt-3 mb-4">Tu destino digital para la mejor experiencia cinematográfica.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="footer-heading">Navegación</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">Inicio</a></li>
+                        <li><a href="cartelera.html" class="footer-link">Cartelera</a></li>
+                        <li><a href="cines.html" class="footer-link">Cines</a></li>
+                        <li><a href="#" class="footer-link">Estrenos</a></li>
+                        <li><a href="#" class="footer-link">Promociones</a></li>
+                    </ul>
+                </div>
+    
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">Términos y condiciones</a></li>
+                        <li><a href="#" class="footer-link">Política de privacidad</a></li>
+                        <li><a href="#" class="footer-link">Política de cookies</a></li>
+                        <li><a href="#" class="footer-link">FAQ</a></li>
+                    </ul>
+                </div>
+    
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="footer-heading">Contacto</h4>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <span class="contact-text">Av. del Cine 123, Ciudad</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone contact-icon"></i>
+                        <span class="contact-text">+123 456 789</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <span class="contact-text">info@filmware.com</span>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> FilmWare. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample data for movies
+        const moviesData = [
+            {
+                id: 1,
+                title: "Dune: Parte 2",
+                poster: "/api/placeholder/300/450",
+                format: "2D, 3D",
+                language: "SUB, ESP"
+            },
+            {
+                id: 2,
+                title: "El Reino del Planeta de los Simios",
+                poster: "/api/placeholder/300/450",
+                format: "2D, 3D",
+                language: "SUB, ESP"
+            },
+            {
+                id: 3,
+                title: "Gladiador II",
+                poster: "/api/placeholder/300/450",
+                format: "2D",
+                language: "SUB, ESP"
+            },
+            {
+                id: 4,
+                title: "La Sociedad de la Nieve",
+                poster: "/api/placeholder/300/450",
+                format: "2D",
+                language: "ESP"
+            },
+            {
+                id: 5,
+                title: "Wonka",
+                poster: "/api/placeholder/300/450",
+                format: "2D",
+                language: "SUB, ESP"
+            },
+            {
+                id: 6,
+                title: "Inside Out 2",
+                poster: "/api/placeholder/300/450",
+                format: "2D, 3D",
+                language: "SUB, ESP"
+            },
+            {
+                id: 7,
+                title: "Deadpool & Wolverine",
+                poster: "/api/placeholder/300/450",
+                format: "2D, IMAX",
+                language: "SUB, ESP"
+            },
+            {
+                id: 8,
+                title: "Megalópolis",
+                poster: "/api/placeholder/300/450",
+                format: "2D",
+                language: "SUB"
+            },
+            {
+                id: 9,
+                title: "Joker: Folie à Deux",
+                poster: "/api/placeholder/300/450",
+                format: "2D",
+                language: "SUB"
+            },
+            {
+                id: 10,
+                title: "Furiosa",
+                poster: "/api/placeholder/300/450",
+                format: "2D, IMAX",
+                language: "SUB, ESP"
+            }
+        ];
+
+        // Function to render movies
+        function renderMovies(movies) {
+            const container = document.getElementById('moviesContainer');
+            container.innerHTML = '';
+            
+            movies.forEach(movie => {
+                const movieCard = document.createElement('div');
+                movieCard.className = 'movie-card';
+                movieCard.innerHTML = `
+                    <div class="movie-poster">
+                        <img src="${movie.poster}" alt="${movie.title}">
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">${movie.title}</h3>
+                        <div class="movie-meta">
+                            <span>${movie.format}</span>
+                            <span>${movie.language}</span>
+                        </div>
+                        <button class="btn btn-buy"><a href="/front/pelicula-page.html">Comprar entradas</a></button>
+                    </div>
+                `;
+                container.appendChild(movieCard);
+            });
+        }
+
+        // Filter movies (simplified example - would connect to backend in production)
+        document.getElementById('filterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const complejo = document.getElementById('complejo').value;
+            const sala = document.getElementById('sala').value;
+            const formato = document.getElementById('formato').value;
+            const idioma = document.getElementById('idioma').value;
+            
+            console.log(`Filtrado por: Complejo=${complejo}, Sala=${sala}, Formato=${formato}, Idioma=${idioma}`);
+            
+            // In a real application, you would send these parameters to your backend
+            // For this demo, we'll just re-render the same movies
+            renderMovies(moviesData);
+        });
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMovies(moviesData);
+        });
+    </script>
+</body>
+</html>
