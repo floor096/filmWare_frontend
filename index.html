@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FilmWare - Tu cine favorito, a un clic de distancia</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fuentes de Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+      <!-- Custom CSS -->
+  <link rel="stylesheet" href="style_index.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <!-- Logo -->
+        <a href="#" class="navbar-brand">
+          <span class="logo-cyan">Film</span><span class="logo-magenta">Ware</span>
+        </a>
+        
+        <!-- Mobile Toggle Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon">
+            <i class="fas fa-bars text-white"></i>
+          </span>
+        </button>
+        
+        <!-- Navigation Items -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a href="/front/index.html" class="nav-link">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a href="/front/cartelera.html" class="nav-link">Cartelera</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Cines</a>
+            </li>
+            <li class="nav-item ms-2">
+              <a href="/front/login.html" class="btn btn-login">Iniciar sesión</a>
+            </li>
+            <li class="nav-item ms-2">
+              <a href="/front/login.html" class="btn btn-register">Registrarse</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Fondo de sala de cine">
+        <div class="hero-overlay"></div>
+      </div>
+      
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            <span>Tu cine favorito, </span>
+            <span style="color: #00FFFF;">a un clic </span>
+            <span>de distancia</span>
+          </h1>
+          
+          <p class="hero-subtitle mx-auto" style="max-width: 600px;">
+            Descubre los últimos estrenos, compra entradas y disfruta de la mejor experiencia cinematográfica.
+          </p>
+          
+          <a href="/front/cartelera.html" class="btn btn-hero animate-pulse-glow">
+            Ver Cartelera
+          </a>
+        </div>
+      </div>
+      
+      <div class="scroll-indicator animate-float ">
+        <i class="fas fa-chevron-down"></i>
+        <p class="scroll-text">Descubre más</p>
+      </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features">
+      <div class="container">
+        <h2 class="section-title">
+          <span>Tu experiencia de cine </span>
+          <span class="title-accent">reinventada</span>
+        </h2>
+        
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="feature-card">
+              <div class="feature-icon icon-primary">
+                <i class="fas fa-ticket-alt"></i>
+              </div>
+              <h3 class="feature-title">Compra tus entradas</h3>
+              <p class="feature-desc">Reserva tus asientos preferidos y compra entradas sin filas ni esperas, desde donde estés.</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="feature-card">
+              <div class="feature-icon icon-secondary">
+                <i class="fas fa-clock"></i>
+              </div>
+              <h3 class="feature-title">Horarios en tiempo real</h3>
+              <p class="feature-desc">Accede a la programación actualizada de todos los cines cercanos a tu ubicación.</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="feature-card">
+              <div class="feature-icon icon-primary">
+                <i class="fas fa-star"></i>
+              </div>
+              <h3 class="feature-title">Califica tus películas</h3>
+              <p class="feature-desc">Comparte tu opinión y lee reseñas de otros usuarios para encontrar tu próxima película favorita.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Promotion Section -->
+    <section class="promotion">
+      <div class="promotion-gradient"></div>
+      
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="promotion-content">
+              <h2 class="promotion-title">
+                <span>Únete a nuestra comunidad de </span>
+                <span style="color: #FF00FF;">cinéfilos</span>
+              </h2>
+              
+              <p class="promotion-desc">
+                Registrándote, obtendrás acceso exclusivo a preventas, descuentos especiales y contenido personalizado.
+              </p>
+              
+              <div class="d-flex flex-wrap gap-3">
+                <a href="#" class="btn btn-secondary-custom">Registrarse ahora</a>
+                <a href="#" class="btn btn-ghost">Más información</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-6">
+            <div class="promotion-image">
+              <div class="image-decoration-1"></div>
+              <div class="image-decoration-2"></div>
+              <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Experiencia de cine" class="promotion-img">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container">
+        <h2 class="cta-title">¿Listo para disfrutar del mejor cine?</h2>
+        
+        <p class="cta-desc mx-auto" style="max-width: 700px;">
+          Descubre los últimos estrenos y las mejores ofertas en tu cine favorito. ¡No te pierdas ninguna película!
+        </p>
+        
+        <div class="d-flex justify-content-center flex-wrap gap-3">
+          <a href="#" class="btn btn-hero">Explorar cartelera</a>
+          <a href="#" class="btn btn-outline-custom">Buscar cines cercanos</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-3 col-md-6">
+          <div class="footer-brand mb-4">
+            <a href="#" class="navbar-brand">
+              <span class="logo-cyan">Film</span><span class="logo-magenta">Ware</span>
+            </a>
+            <p class="mt-3 mb-4">Tu destino digital para la mejor experiencia cinematográfica.</p>
+            <div class="social-links">
+              <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+          <h4 class="footer-heading">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Inicio</a></li>
+            <li><a href="#" class="footer-link">Cartelera</a></li>
+            <li><a href="#" class="footer-link">Cines</a></li>
+            <li><a href="#" class="footer-link">Estrenos</a></li>
+            <li><a href="#" class="footer-link">Promociones</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+          <h4 class="footer-heading">Legal</h4>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Términos y condiciones</a></li>
+            <li><a href="#" class="footer-link">Política de privacidad</a></li>
+            <li><a href="#" class="footer-link">Política de cookies</a></li>
+            <li><a href="#" class="footer-link">FAQ</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+          <h4 class="footer-heading">Contacto</h4>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt contact-icon"></i>
+            <span class="contact-text">Av. del Cine 123, Ciudad</span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone contact-icon"></i>
+            <span class="contact-text">+123 456 789</span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope contact-icon"></i>
+            <span class="contact-text">info@filmware.com</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> FilmWare. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JavaScript -->
+  <script src="main.js"></script>
+</body>
+</html>
