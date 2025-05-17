@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FilmWare - Detalles de película</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="componentes/navbar.css">
+    <link rel="stylesheet" href="componentes/footer.css">
+
+    <style>
+        :root {
+            --primary-color: #00E5FF;
+            --secondary-color: #FF00FF;
+            --dark-bg: #0A0A16;
+            --card-bg: #141428;
+            --text-color: #ffffff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+        }
+        
+        /* contenido */
+        .movie-container {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            margin-top: 100px;
+        }
+        
+        .movie-poster {
+            height: 450px;
+            object-fit: cover;
+        }
+        
+        .movie-details {
+            padding: 30px;
+        }
+        
+        .movie-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .movie-info {
+            margin-bottom: 20px;
+        }
+        
+        .movie-info span {
+            background-color: var(--dark-bg);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .booking-section {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        .form-select, .form-control {
+            background-color: var(--dark-bg);
+            border: 1px solid #333;
+            color: var(--text-color);
+            border-radius: 10px;
+            padding: 12px 15px;
+        }
+        
+        .date-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .date-option {
+            opacity: 0;
+            position: absolute;
+        }
+        
+        .date-option + label {
+            background-color: var(--dark-bg);
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .date-option:checked + label {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            font-weight: bold;
+        }
+        
+        .schedule-container {
+            margin-top: 20px;
+        }
+        
+        .time-option {
+            opacity: 0;
+            position: absolute;
+        }
+        
+        .times-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .time-option + label {
+            display: block;
+            background-color: var(--dark-bg);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .time-option:checked + label {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            font-weight: bold;
+        }
+        
+        .btn-cta {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--dark-bg);
+            font-weight: bold;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 229, 255, 0.3);
+        }
+        
+        .format-badge {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 5px;
+            margin-right: 10px;
+    }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="navbar"></div>
+
+    <!-- Movie Details -->
+    <div class="container my-5">
+        <div class="movie-container row">
+            <div class="col-lg-4 p-0">
+                <img src="/api/placeholder/400/600" alt="Poster de la película" class="img-fluid movie-poster w-100">
+            </div>
+            <div class="col-lg-8 movie-details">
+                <h1 class="movie-title">Dune: Parte Dos</h1>
+                <div class="movie-info mb-4">
+                    <span><i class="fas fa-clock me-1"></i> 166 min</span>
+                    <span><i class="fas fa-calendar me-1"></i> 2025</span>
+                    <span><i class="fas fa-star me-1"></i> 8.5/10</span>
+                    <span>Ciencia Ficción</span>
+                    <span>Acción</span>
+                </div>
+                <div class="mb-4">
+                    <span class="format-badge">2D</span>
+                    <span class="format-badge">3D</span>
+                    <span class="format-badge">IMAX</span>
+                </div>
+                <p class="movie-synopsis">
+                    Paul Atreides se une a los Fremen y comienza un viaje espiritual y político para convertirse en Muad'Dib, mientras intenta evitar el terrible futuro que solo él puede prever. Enfrentando difíciles decisiones entre el amor y el destino del universo conocido, Paul deberá prevenir un futuro terrible que solo él puede anticipar.
+                </p>
+                <p>
+                    <strong>Director:</strong> Denis Villeneuve<br>
+                    <strong>Reparto:</strong> Timothée Chalamet, Zendaya, Rebecca Ferguson, Javier Bardem, Josh Brolin
+                </p>
+            </div>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="booking-section">
+            <h2 class="section-title">Reserva tus entradas</h2>
+            <form id="booking-form">
+                <div class="row mb-4">
+                    <div class="col-md-4 mb-3">
+                        <label for="complejo" class="form-label">Complejo</label>
+                        <select class="form-select" id="complejo" required>
+                            <option value="" selected disabled>Seleccionar complejo</option>
+                            <option value="1">FilmWare Centro</option>
+                            <option value="2">FilmWare Plaza</option>
+                            <option value="3">FilmWare Premium</option>
+                            <option value="4">FilmWare Norte</option>
+                            <option value="5">FilmWare Sur</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="sala" class="form-label">Sala</label>
+                        <select class="form-select" id="sala" required>
+                            <option value="" selected>Todas las salas</option>
+                            <option value="standard">Estándar</option>
+                            <option value="vip">VIP</option>
+                            <option value="premium">Premium</option>
+                            <option value="4dx">4DX</option>
+                            <option value="imax">IMAX</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="formato" class="form-label">Formato</label>
+                        <select class="form-select" id="formato" required>
+                            <option value="" selected disabled>Seleccionar formato</option>
+                            <option value="2d">2D</option>
+                            <option value="3d">3D</option>
+                            <option value="imax">IMAX</option>
+                            <option value="4dx">4DX</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="idioma" class="form-label">Idioma</label>
+                        <select class="form-select" id="idioma" required>
+                            <option value="" selected disabled>Seleccionar idioma</option>
+                            <option value="esp">Español</option>
+                            <option value="esp-sub">Subtitulada (ESP)</option>
+                            <option value="eng">Inglés</option>
+                            <option value="eng-sub">Subtitulada (ENG)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label">Fecha</label>
+                    <div class="date-options">
+                        <input type="radio" name="fecha" id="fecha-hoy" class="date-option" value="hoy" checked>
+                        <label for="fecha-hoy">Hoy<br>17 May</label>
+                        
+                        <input type="radio" name="fecha" id="fecha-manana" class="date-option" value="manana">
+                        <label for="fecha-manana">Mañana<br>18 May</label>
+                        
+                        <input type="radio" name="fecha" id="fecha-pasado" class="date-option" value="pasado">
+                        <label for="fecha-pasado">Pasado<br>19 May</label>
+                        
+                        <input type="radio" name="fecha" id="fecha-postpasado" class="date-option" value="postpasado">
+                        <label for="fecha-postpasado">Domingo<br>20 May</label>
+                    </div>
+                </div>
+                
+                <div class="schedule-container">
+                    <label class="form-label">Horarios disponibles</label>
+                    
+                    <div class="cinema-schedule" id="cinepulse-centro-schedule">
+                        <div class="times-grid">
+                            <input type="radio" name="horario" id="hora-1" class="time-option" value="13:30">
+                            <label for="hora-1">13:30</label>
+                            
+                            <input type="radio" name="horario" id="hora-2" class="time-option" value="16:00">
+                            <label for="hora-2">16:00</label>
+                            
+                            <input type="radio" name="horario" id="hora-3" class="time-option" value="18:45">
+                            <label for="hora-3">18:45</label>
+                            
+                            <input type="radio" name="horario" id="hora-4" class="time-option" value="21:15">
+                            <label for="hora-4">21:15</label>
+                            
+                            <input type="radio" name="horario" id="hora-5" class="time-option" value="23:30">
+                            <label for="hora-5">23:30</label>
+                        </div>
+                    </div>
+                    
+                    <div class="cinema-schedule" id="cinepulse-norte-schedule" style="display: none;">
+                        <div class="times-grid">
+                            <input type="radio" name="horario" id="hora-6" class="time-option" value="14:15">
+                            <label for="hora-6">14:15</label>
+                            
+                            <input type="radio" name="horario" id="hora-7" class="time-option" value="17:00">
+                            <label for="hora-7">17:00</label>
+                            
+                            <input type="radio" name="horario" id="hora-8" class="time-option" value="19:30">
+                            <label for="hora-8">19:30</label>
+                            
+                            <input type="radio" name="horario" id="hora-9" class="time-option" value="22:00">
+                            <label for="hora-9">22:00</label>
+                        </div>
+                    </div>
+                    
+                    <div class="cinema-schedule" id="cinepulse-este-schedule" style="display: none;">
+                        <div class="times-grid">
+                            <input type="radio" name="horario" id="hora-10" class="time-option" value="15:00">
+                            <label for="hora-10">15:00</label>
+                            
+                            <input type="radio" name="horario" id="hora-11" class="time-option" value="18:00">
+                            <label for="hora-11">18:00</label>
+                            
+                            <input type="radio" name="horario" id="hora-12" class="time-option" value="20:30">
+                            <label for="hora-12">20:30</label>
+                        </div>
+                    </div>
+                    
+                    <div class="cinema-schedule" id="cinepulse-oeste-schedule" style="display: none;">
+                        <div class="times-grid">
+                            <input type="radio" name="horario" id="hora-13" class="time-option" value="14:45">
+                            <label for="hora-13">14:45</label>
+                            
+                            <input type="radio" name="horario" id="hora-14" class="time-option" value="17:30">
+                            <label for="hora-14">17:30</label>
+                            
+                            <input type="radio" name="horario" id="hora-15" class="time-option" value="20:00">
+                            <label for="hora-15">20:00</label>
+                            
+                            <input type="radio" name="horario" id="hora-16" class="time-option" value="22:45">
+                            <label for="hora-16">22:45</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-5">
+                    <button type="submit" class="btn-cta">Continuar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="include.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar horarios según el complejo seleccionado
+            const complejoSelect = document.getElementById('complejo');
+            const scheduleContainers = document.querySelectorAll('.cinema-schedule');
+            
+            complejoSelect.addEventListener('change', function() {
+                // Ocultar todos los horarios
+                scheduleContainers.forEach(container => {
+                    container.style.display = 'none';
+                });
+                
+                // Mostrar el horario del complejo seleccionado
+                const selectedComplexId = this.value + '-schedule';
+                const selectedSchedule = document.getElementById(selectedComplexId);
+                if (selectedSchedule) {
+                    selectedSchedule.style.display = 'block';
+                }
+            });
+            
+            // Validación del formulario
+            const bookingForm = document.getElementById('booking-form');
+            
+            bookingForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const complejo = document.getElementById('complejo').value;
+                const formato = document.getElementById('formato').value;
+                const idioma = document.getElementById('idioma').value;
+                
+                let fecha = '';
+                document.querySelectorAll('input[name="fecha"]').forEach(radio => {
+                    if (radio.checked) {
+                        fecha = radio.value;
+                    }
+                });
+                
+                let horario = '';
+                document.querySelectorAll('input[name="horario"]').forEach(radio => {
+                    if (radio.checked) {
+                        horario = radio.value;
+                    }
+                });
+                
+                if (!complejo || !formato || !idioma || !fecha || !horario) {
+                    alert('Por favor, completa todos los campos para continuar.');
+                    return;
+                }
+                
+                // Aquí iría la lógica para continuar con la compra
+                alert('¡Perfecto! Continuando con la selección de asientos para Dune: Parte Dos en ' + complejo + ' el día ' + fecha + ' a las ' + horario);
+                // window.location.href = 'seleccion-asientos.html';
+            });
+        });
+    </script>
+</body>
+</html>
