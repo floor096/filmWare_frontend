@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <!-- Logo -->
-                <a href="#" class="navbar-brand">
+                <a href="index.html" class="navbar-brand">
                     <span class="logo-cyan">Film</span><span class="logo-magenta">Ware</span>
                 </a>
 
@@ -25,17 +25,31 @@
                             <a href="cartelera.html" class="nav-link">Cartelera</a>
                         </li>
                         <li class="nav-item">
-                            <a href="cines.html" class="nav-link">Cines</a>
+                            <a href="cines-page.html" class="nav-link">Cines</a>
                         </li>
-                        <li class="nav-item ms-2">
+
+                        <!-- Contenedor que se reemplaza dinámicamente -->
+                        <li class="nav-item ms-2 dropdown d-none" id="userDropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="userName">
+                                Usuario
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" id="userMenu">
+                                <!-- Se llenará por JS -->
+                            </ul>
+                        </li>
+                        
+                        <!-- Botones por defecto (sin sesión) -->
+                        <li class="nav-item ms-2" id="btnLogin">
                             <a href="login.html" class="btn btn-login">Iniciar sesión</a>
                         </li>
-                        <li class="nav-item ms-2">
+                        <li class="nav-item ms-2" id="btnRegister">
                             <a href="login.html" class="btn btn-register">Registrarse</a>
                         </li>
+  
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+    <script></script>
 </body>
