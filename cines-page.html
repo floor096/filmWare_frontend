@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cines Registradas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="componentes/navbar.css">
+    <link rel="stylesheet" href="componentes/footer.css">
+    <style>
+        body {
+            background-color: #0d1117;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            margin-top: 100px;
+        }
+        
+        .search-box {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 8px 12px;
+            width: 100%;
+            color: #c9d1d9;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+        
+        .search-btn {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+        }
+        
+        .branch-card {
+            background-color: #161b22;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #00dbde;
+        }
+        
+        .branch-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #e6edf3;
+        }
+        
+        .branch-info {
+            margin-bottom: 5px;
+            color: #8b949e;
+        }
+        
+        .branch-info i {
+            margin-right: 8px;
+            color: #8b949e;
+        }
+        
+        .action-btn {
+            color: #58a6ff;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .delete-btn {
+            color: #f85149;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="navbar"></div>
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sucursales Section -->
+        <div class="header-container">
+            <h2>Cines Registradas</h2>
+            <div class="search-container d-flex">
+                <input type="text" class="search-box" placeholder="Buscar sucursal...">
+                <button class="btn search-btn ms-2">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Branch Cards -->
+        <div class="branches-container">
+            <!-- Branch 1 -->
+            <div class="branch-card">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="branch-name">Cinepolis Plaza Central</div>
+                    <div>
+                        <button class="action-btn">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="action-btn delete-btn">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-geo-alt"></i> Av. Corrientes 1234, Balvanera, Buenos Aires
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-door-open"></i> 8 salas
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-people"></i> 1200 espectadores
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-film"></i> 2D, 3D, IMAX
+                </div>
+            </div>
+
+            <!-- Branch 2 -->
+            <div class="branch-card">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="branch-name">Showcase Haedo</div>
+                    <div>
+                        <button class="action-btn">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="action-btn delete-btn">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-geo-alt"></i> Rivadavia 15100, Haedo, Buenos Aires
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-door-open"></i> 12 salas
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-people"></i> 2400 espectadores
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-film"></i> 2D, 3D, 4DX
+                </div>
+            </div>
+
+            <!-- Branch 3 -->
+            <div class="branch-card">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="branch-name">Hoyts Abasto</div>
+                    <div>
+                        <button class="action-btn">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="action-btn delete-btn">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-geo-alt"></i> Av. Corrientes 3247, Abasto, Buenos Aires
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-door-open"></i> 10 salas
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-people"></i> 1800 espectadores
+                </div>
+                <div class="branch-info">
+                    <i class="bi bi-film"></i> 2D, 3D, IMAX
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="include.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search functionality
+            const searchBox = document.querySelector('.search-box');
+            const searchBtn = document.querySelector('.search-btn');
+            const branchCards = document.querySelectorAll('.branch-card');
+            
+            function performSearch() {
+                const searchTerm = searchBox.value.toLowerCase();
+                
+                branchCards.forEach(card => {
+                    const branchName = card.querySelector('.branch-name').textContent.toLowerCase();
+                    const branchAddress = card.querySelector('.branch-info').textContent.toLowerCase();
+                    
+                    if(branchName.includes(searchTerm) || branchAddress.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            searchBtn.addEventListener('click', performSearch);
+            searchBox.addEventListener('keyup', function(e) {
+                if(e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
