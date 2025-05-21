@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Películas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        /* Estilos generales inspirados en la imagen de referencia */
+        body {
+            background-color: #0a0c14;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-card {
+            background-color: #181a24;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            background-color: #181a24;
+            border-bottom: 1px solid #2a2d3a;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        /* Estilización de formularios */
+        .form-label {
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .form-control, .form-select {
+            background-color: #12141e;
+            border: 1px solid #2a2d3a;
+            color: #ffffff;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #12141e;
+            border-color: #1399d6;
+            box-shadow: 0 0 0 0.25rem rgba(19, 153, 214, 0.25);
+            color: #ffffff;
+        }
+
+        /* Botón principal */
+        .btn-guardar {
+            background-color: #1399d6;
+            border: none;
+            color: white;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-guardar:hover {
+            background-color: #0f7bad;
+            color: white;
+        }
+
+        /* Estilización para los botones de formato */
+        .format-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .format-option {
+            background-color: #12141e;
+            border: 1px solid #2a2d3a;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .format-option.active {
+            background-color: #1399d6;
+            border-color: #1399d6;
+        }
+
+        /* Vista previa de la imagen */
+        .image-preview {
+            width: 100%;
+            height: 300px;
+            background-color: #12141e;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 1px dashed #2a2d3a;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .star-rating {
+            margin-bottom: 15px;
+        }
+
+        .star-rating .bi-star-fill {
+            color: #1399d6;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .upload-label {
+            display: block;
+            background-color: #1399d6;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .upload-label:hover {
+            background-color: #0f7bad;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background-color: #1399d6;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tag .remove-tag {
+            margin-left: 6px;
+            cursor: pointer;
+        }
+
+        .genre-tag {
+            display: inline-block;
+            background-color: #1399d6;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center mt-5 mb-5">
+            <div class="col-lg-10">
+                <div class="card form-card">
+                    <div class="card-header">
+                        <h2 class="text-center">Cargar Nueva Película</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="form-pelicula">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <!-- Información básica de la película -->
+                                    <div class="mb-3">
+                                        <label for="titulo" class="form-label">Título de la película:</label>
+                                        <input type="text" id="titulo" class="form-control" required placeholder="Ej: Dune: Parte Dos">
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="anio" class="form-label">Año:</label>
+                                            <input type="number" id="anio" class="form-control" required min="1900" max="2100" placeholder="Ej: 2023">
+                                        </div>
+                                        
+                                        <div class="col-md-6 mb-3">
+                                            <label for="duracion" class="form-label">Duración (minutos):</label>
+                                            <input type="number" id="duracion" class="form-control" required min="1" placeholder="Ej: 166">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Calificación:</label>
+                                        <div class="star-rating" id="calificacion">
+                                            <i class="bi bi-star-fill" data-value="1"></i>
+                                            <i class="bi bi-star-fill" data-value="2"></i>
+                                            <i class="bi bi-star-fill" data-value="3"></i>
+                                            <i class="bi bi-star-fill" data-value="4"></i>
+                                            <i class="bi bi-star-fill" data-value="5"></i>
+                                            <i class="bi bi-star-fill" data-value="6"></i>
+                                            <i class="bi bi-star-fill" data-value="7"></i>
+                                            <i class="bi bi-star-fill" data-value="8"></i>
+                                            <i class="bi bi-star-fill" data-value="9"></i>
+                                            <i class="bi bi-star-fill" data-value="10"></i>
+                                            <span class="ms-2" id="rating-value">0/10</span>
+                                            <input type="hidden" id="rating-input" name="rating" value="0">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Géneros:</label>
+                                        <div class="d-flex flex-wrap mb-2">
+                                            <div class="genre-tag" data-genre="Acción">Acción</div>
+                                            <div class="genre-tag" data-genre="Aventura">Aventura</div>
+                                            <div class="genre-tag" data-genre="Comedia">Comedia</div>
+                                            <div class="genre-tag" data-genre="Drama">Drama</div>
+                                            <div class="genre-tag" data-genre="Ciencia Ficción">Ciencia Ficción</div>
+                                            <div class="genre-tag" data-genre="Terror">Terror</div>
+                                            <div class="genre-tag" data-genre="Fantasía">Fantasía</div>
+                                            <div class="genre-tag" data-genre="Romance">Romance</div>
+                                        </div>
+                                        <div class="tag-container" id="selected-genres"></div>
+                                        <input type="hidden" id="generos-input" name="generos" value="">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <!-- Imagen de portada -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Imagen de portada:</label>
+                                        <div class="image-preview" id="image-preview">
+                                            <i class="bi bi-image" style="font-size: 3rem; color: #2a2d3a;"></i>
+                                        </div>
+                                        <label for="poster" class="upload-label">
+                                            <i class="bi bi-upload me-2"></i> Subir imagen
+                                        </label>
+                                        <input type="file" id="poster" class="form-control d-none" accept="image/*">
+                                    </div>
+
+                                    <!-- Formatos disponibles -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Formatos disponibles:</label>
+                                        <div class="format-options">
+                                            <div class="format-option" data-format="2D">2D</div>
+                                            <div class="format-option" data-format="3D">3D</div>
+                                            <div class="format-option" data-format="IMAX">IMAX</div>
+                                        </div>
+                                        <input type="hidden" id="formatos-input" name="formatos" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="sinopsis" class="form-label">Sinopsis:</label>
+                                <textarea id="sinopsis" class="form-control" rows="4" required placeholder="Escribe la sinopsis de la película..."></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="director" class="form-label">Director:</label>
+                                <input type="text" id="director" class="form-control" required placeholder="Ej: Denis Villeneuve">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="reparto" class="form-label">Reparto principal:</label>
+                                <input type="text" id="reparto" class="form-control" required placeholder="Ej: Timothée Chalamet, Zendaya, Rebecca Ferguson, Javier Bardem, Josh Brolin">
+                            </div>
+                            
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-guardar">Guardar película</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funcionalidad para la vista previa de imagen
+            const imageInput = document.getElementById('poster');
+            const imagePreview = document.getElementById('image-preview');
+            
+            imageInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Limpiar el contenido actual
+                        imagePreview.innerHTML = '';
+                        
+                        // Crear la imagen y mostrarla
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        imagePreview.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Funcionalidad para la calificación con estrellas
+            const stars = document.querySelectorAll('.star-rating .bi-star-fill');
+            const ratingValue = document.getElementById('rating-value');
+            const ratingInput = document.getElementById('rating-input');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = parseInt(this.getAttribute('data-value'));
+                    ratingInput.value = value;
+                    ratingValue.textContent = value + '/10';
+                    
+                    // Actualizar la apariencia de las estrellas
+                    stars.forEach(s => {
+                        const starValue = parseInt(s.getAttribute('data-value'));
+                        if (starValue <= value) {
+                            s.style.opacity = '1';
+                        } else {
+                            s.style.opacity = '0.5';
+                        }
+                    });
+                });
+                
+                // Inicialmente, todas las estrellas están atenuadas
+                star.style.opacity = '0.5';
+            });
+            
+            // Funcionalidad para seleccionar formatos
+            const formatOptions = document.querySelectorAll('.format-option');
+            const formatosInput = document.getElementById('formatos-input');
+            const selectedFormats = new Set();
+            
+            formatOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const format = this.getAttribute('data-format');
+                    
+                    if (selectedFormats.has(format)) {
+                        selectedFormats.delete(format);
+                        this.classList.remove('active');
+                    } else {
+                        selectedFormats.add(format);
+                        this.classList.add('active');
+                    }
+                    
+                    formatosInput.value = Array.from(selectedFormats).join(',');
+                });
+            });
+            
+            // Funcionalidad para seleccionar géneros
+            const genreTags = document.querySelectorAll('.genre-tag');
+            const selectedGenresContainer = document.getElementById('selected-genres');
+            const generosInput = document.getElementById('generos-input');
+            const selectedGenres = new Set();
+            
+            genreTags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const genre = this.getAttribute('data-genre');
+                    
+                    if (selectedGenres.has(genre)) {
+                        // Ya está seleccionado, no hacer nada
+                        return;
+                    }
+                    
+                    selectedGenres.add(genre);
+                    
+                    // Crear el tag visual
+                    const tagElement = document.createElement('div');
+                    tagElement.className = 'tag';
+                    tagElement.innerHTML = `${genre} <span class="remove-tag" data-genre="${genre}">×</span>`;
+                    selectedGenresContainer.appendChild(tagElement);
+                    
+                    // Actualizar el input oculto
+                    generosInput.value = Array.from(selectedGenres).join(',');
+                    
+                    // Añadir evento para eliminar tag
+                    tagElement.querySelector('.remove-tag').addEventListener('click', function() {
+                        const genreToRemove = this.getAttribute('data-genre');
+                        selectedGenres.delete(genreToRemove);
+                        this.parentElement.remove();
+                        generosInput.value = Array.from(selectedGenres).join(',');
+                    });
+                });
+            });
+            
+            // Manejar el envío del formulario
+            document.getElementById('form-pelicula').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Obtener todos los valores del formulario
+                const titulo = document.getElementById('titulo').value;
+                const anio = document.getElementById('anio').value;
+                const duracion = document.getElementById('duracion').value;
+                const calificacion = document.getElementById('rating-input').value;
+                const generos = document.getElementById('generos-input').value;
+                const sinopsis = document.getElementById('sinopsis').value;
+                const director = document.getElementById('director').value;
+                const reparto = document.getElementById('reparto').value;
+                const formatos = document.getElementById('formatos-input').value;
+                
+                // Validación básica
+                if (!titulo || !anio || !duracion || !sinopsis || !director || !reparto) {
+                    alert('Por favor, completa todos los campos obligatorios.');
+                    return;
+                }
+                
+                if (generos === '') {
+                    alert('Por favor, selecciona al menos un género.');
+                    return;
+                }
+                
+                if (formatos === '') {
+                    alert('Por favor, selecciona al menos un formato disponible.');
+                    return;
+                }
+                
+                // Crear objeto con los datos de la película
+                const nuevaPelicula = {
+                    titulo,
+                    anio,
+                    duracion,
+                    calificacion,
+                    generos: generos.split(','),
+                    sinopsis,
+                    director,
+                    reparto: reparto.split(',').map(actor => actor.trim()),
+                    formatos: formatos.split(',')
+                };
+                
+                // Aquí se enviarían los datos al servidor
+                console.log('Nueva película registrada:', nuevaPelicula);
+                
+                // Mostrar mensaje de éxito
+                alert(`Película "${titulo}" registrada correctamente.`);
+                
+                // Resetear el formulario
+                this.reset();
+                
+                // Resetear los componentes personalizados
+                imagePreview.innerHTML = '<i class="bi bi-image" style="font-size: 3rem; color: #2a2d3a;"></i>';
+                
+                stars.forEach(star => {
+                    star.style.opacity = '0.5';
+                });
+                
+                ratingValue.textContent = '0/10';
+                ratingInput.value = '0';
+                
+                selectedGenresContainer.innerHTML = '';
+                selectedGenres.clear();
+                generosInput.value = '';
+                
+                formatOptions.forEach(option => {
+                    option.classList.remove('active');
+                });
+                
+                selectedFormats.clear();
+                formatosInput.value = '';
+            });
+        });
+    </script>
+</body>
+</html>
