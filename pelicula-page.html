@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FilmWare - Detalles de película</title>
+    <title>FilmWare - Reserva de Entradas</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="componentes/navbar.css">
-    <link rel="stylesheet" href="componentes/footer.css">
-
     <style>
         :root {
             --primary-color: #00E5FF;
@@ -22,8 +19,9 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--dark-bg);
             color: var(--text-color);
+            padding: 20px;
         }
-        
+
         /* contenido */
         .movie-container {
             background-color: var(--card-bg);
@@ -60,12 +58,14 @@
             margin-right: 10px;
             font-size: 0.9rem;
         }
+    
         
         .booking-section {
             background-color: var(--card-bg);
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 50px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         
         .section-title {
@@ -79,12 +79,24 @@
             font-weight: 500;
         }
         
-        .form-select, .form-control {
+        .form-select {
             background-color: var(--dark-bg);
             border: 1px solid #333;
             color: var(--text-color);
             border-radius: 10px;
             padding: 12px 15px;
+        }
+        
+        .form-select:focus {
+            background-color: var(--dark-bg);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.25rem rgba(0, 229, 255, 0.25);
+        }
+        
+        .form-select option {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
         }
         
         .date-options {
@@ -105,6 +117,7 @@
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
+            border: 1px solid #333;
         }
         
         .date-option:checked + label {
@@ -137,6 +150,7 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            border: 1px solid #333;
         }
         
         .time-option:checked + label {
@@ -161,24 +175,119 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(0, 229, 255, 0.3);
         }
-        
-        .format-badge {
-            display: inline-block;
-            background-color: var(--primary-color);
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 22, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 0;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .close {
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal .form-label {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .modal .form-select {
+            background-color: var(--dark-bg);
+            border: 1px solid #333;
+            color: var(--text-color);
+            border-radius: 10px;
+            padding: 12px 15px;
+        }
+
+        .btn-secondary {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            border: 1px solid #333;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+
+        .modal .btn-cta {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: var(--dark-bg);
             font-weight: bold;
-            padding: 5px 12px;
-            border-radius: 5px;
-            margin-right: 10px;
-    }
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 229, 255, 0.3);
+        }
+
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <div id="navbar"></div>
 
-    <!-- Movie Details -->
     <div class="container my-5">
+        <!-- Movie Details -->
         <div class="movie-container row">
             <div class="col-lg-4 p-0">
                 <img src="/api/placeholder/400/600" alt="Poster de la película" class="img-fluid movie-poster w-100">
@@ -198,7 +307,10 @@
                     <span class="format-badge">IMAX</span>
                 </div>
                 <p class="movie-synopsis">
-                    Paul Atreides se une a los Fremen y comienza un viaje espiritual y político para convertirse en Muad'Dib, mientras intenta evitar el terrible futuro que solo él puede prever. Enfrentando difíciles decisiones entre el amor y el destino del universo conocido, Paul deberá prevenir un futuro terrible que solo él puede anticipar.
+                    Paul Atreides se une a los Fremen y comienza un viaje espiritual y político para convertirse en Muad'Dib,
+                    mientras intenta evitar el terrible futuro que solo él puede prever. Enfrentando difíciles decisiones entre
+                    el amor y el destino del universo conocido, Paul deberá prevenir un futuro terrible que solo él puede
+                    anticipar.
                 </p>
                 <p>
                     <strong>Director:</strong> Denis Villeneuve<br>
@@ -208,7 +320,7 @@
         </div>
 
         <!-- Booking Form -->
-        <div class="booking-section">
+        <div class="booking-section row">
             <h2 class="section-title">Reserva tus entradas</h2>
             <form id="booking-form">
                 <div class="row mb-4">
@@ -342,71 +454,115 @@
                 </div>
                 
                 <div class="text-center mt-5">
-                    <button type="submit" class="btn-cta">Continuar</button>
+                    <button type="button" class="btn-cta" onclick="openTicketModal()">Continuar</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Footer -->
-    <div id="footer"></div>
-
+    <!-- Modal para cantidad de entradas y método de pago -->
+    <div id="ticketModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Finalizar reserva</h3>
+                <span class="close" onclick="closeTicketModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="ticket-payment-form">
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <label for="cantidad-entradas" class="form-label">Cantidad de entradas</label>
+                            <select class="form-select" id="cantidad-entradas" required>
+                                <option value="" selected disabled>Seleccionar cantidad</option>
+                                <option value="1">1 entrada</option>
+                                <option value="2">2 entradas</option>
+                                <option value="3">3 entradas</option>
+                                <option value="4">4 entradas</option>
+                                <option value="5">5 entradas</option>
+                                <option value="6">6 entradas</option>
+                                <option value="7">7 entradas</option>
+                                <option value="8">8 entradas</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="metodo-pago" class="form-label">Método de pago</label>
+                            <select class="form-select" id="metodo-pago" required>
+                                <option value="" selected disabled>Seleccionar método</option>
+                                <option value="mercadopago">Mercado Pago</option>
+                                <option value="mercadopago-credito">Mercado Pago - Tarjeta de Crédito</option>
+                                <option value="mercadopago-debito">Mercado Pago - Tarjeta de Débito</option>
+                                <option value="mercadopago-efectivo">Mercado Pago - Efectivo</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn-secondary" onclick="closeTicketModal()">Cancelar</button>
+                        <button type="submit" class="btn-cta">Proceder al pago</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="include.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mostrar horarios según el complejo seleccionado
-            const complejoSelect = document.getElementById('complejo');
-            const scheduleContainers = document.querySelectorAll('.cinema-schedule');
+        function openTicketModal() {
+            // Validar que se hayan completado los campos requeridos del formulario principal
+            const form = document.getElementById('booking-form');
+            const requiredFields = form.querySelectorAll('[required]');
+            let allValid = true;
             
-            complejoSelect.addEventListener('change', function() {
-                // Ocultar todos los horarios
-                scheduleContainers.forEach(container => {
-                    container.style.display = 'none';
-                });
-                
-                // Mostrar el horario del complejo seleccionado
-                const selectedComplexId = this.value + '-schedule';
-                const selectedSchedule = document.getElementById(selectedComplexId);
-                if (selectedSchedule) {
-                    selectedSchedule.style.display = 'block';
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    allValid = false;
+                    field.classList.add('is-invalid');
+                } else {
+                    field.classList.remove('is-invalid');
                 }
             });
             
-            // Validación del formulario
-            const bookingForm = document.getElementById('booking-form');
+            // También validar que se haya seleccionado un horario
+            const horarioSelected = form.querySelector('input[name="horario"]:checked');
+            if (!horarioSelected) {
+                allValid = false;
+                alert('Por favor selecciona un horario');
+            }
             
-            bookingForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                
-                const complejo = document.getElementById('complejo').value;
-                const formato = document.getElementById('formato').value;
-                const idioma = document.getElementById('idioma').value;
-                
-                let fecha = '';
-                document.querySelectorAll('input[name="fecha"]').forEach(radio => {
-                    if (radio.checked) {
-                        fecha = radio.value;
-                    }
-                });
-                
-                let horario = '';
-                document.querySelectorAll('input[name="horario"]').forEach(radio => {
-                    if (radio.checked) {
-                        horario = radio.value;
-                    }
-                });
-                
-                if (!complejo || !formato || !idioma || !fecha || !horario) {
-                    alert('Por favor, completa todos los campos para continuar.');
-                    return;
-                }
-                
-                // Aquí iría la lógica para continuar con la compra
-                alert('¡Perfecto! Continuando con la selección de asientos para Dune: Parte Dos en ' + complejo + ' el día ' + fecha + ' a las ' + horario);
-                // window.location.href = 'seleccion-asientos.html';
-            });
+            if (allValid) {
+                document.getElementById('ticketModal').style.display = 'flex';
+            } else {
+                alert('Por favor completa todos los campos requeridos');
+            }
+        }
+
+        function closeTicketModal() {
+            document.getElementById('ticketModal').style.display = 'none';
+        }
+
+        // Cerrar modal al hacer click fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('ticketModal');
+            if (event.target === modal) {
+                closeTicketModal();
+            }
+        }
+
+        // Manejar el envío del formulario del modal
+        document.getElementById('ticket-payment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const cantidadEntradas = document.getElementById('cantidad-entradas').value;
+            const metodoPago = document.getElementById('metodo-pago').value;
+            
+            if (cantidadEntradas && metodoPago) {
+                alert('Redirigiendo a Mercado Pago...');
+                // Aquí iría la lógica para procesar el pago
+                closeTicketModal();
+            } else {
+                alert('Por favor completa todos los campos');
+            }
         });
     </script>
 </body>
