@@ -1,0 +1,43 @@
+name: Construir imagen Docker y disparar deploy en Repo B
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-trigger:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del Repo A
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Login a Azure
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # 3. Construir y subir imagen Docker a ACR
+      - name: Construir y subir imagen Docker
+        run: |
+          az acr build \
+            --registry <nombre-de-tu-acr> \
+            --image frontend:${{ github.sha }} \
+            --file Dockerfile .
+
+      # 4. Disparar deploy en Repo B (vía repository_dispatch)
+      - name: Trigger deploy en Repo B
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_B_PAT }}
+          repository: GastonNR/filmWare_devops
+          event-type: trigger-deploy
+
+
+
+#Este workflow:
+#Construye la imagen Docker.
+#La sube a Azure Container Registry (ACR).
+#Dispara el pipeline de deploy en el Repo B.
