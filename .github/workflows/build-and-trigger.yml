@@ -24,7 +24,7 @@ jobs:
         run: |
           az acr build \
           --registry registryfilmware \
-          --resource-group grupo-recursos-filmware \  
+          --resource-group grupo-recursos-filmware \
           --image frontend:${{ github.sha }} \
           --file Dockerfile  .
 
