@@ -22,11 +22,12 @@ jobs:
       # 3. Construir y subir imagen Docker a ACR
       - name: Construir y subir imagen Docker
         run: |
-          az account set --subscription "795c0803-b80b-4177-ad05-ab60ab92cb39"
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
           az acr build \
-            --registry registryfilmware \
-            --image frontend:${{ github.sha }} \
-            --file Dockerfile .
+          --registry registryfilmware \
+          --resource-group grupo-recursos-filmware \  # ¡Añade esta línea!
+          --image frontend:${{ github.sha }} \
+          --file Dockerfile  .
 
       # 4. Disparar deploy en Repo B (vía repository_dispatch)
       - name: Trigger deploy en Repo B
