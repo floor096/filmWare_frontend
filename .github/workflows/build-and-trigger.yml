@@ -23,7 +23,7 @@ jobs:
       - name: Construir y subir imagen Docker
         run: |
           az acr build \
-            --registry <nombre-de-tu-acr> \
+            --registry registryfilmware \
             --image frontend:${{ github.sha }} \
             --file Dockerfile .
 
