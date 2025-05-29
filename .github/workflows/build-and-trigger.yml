@@ -22,10 +22,9 @@ jobs:
       # 3. Construir y subir imagen Docker a ACR
       - name: Construir y subir imagen Docker
         run: |
-          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
           az acr build \
           --registry registryfilmware \
-          --resource-group grupo-recursos-filmware \  # ¡Añade esta línea!
+          --resource-group grupo-recursos-filmware \  
           --image frontend:${{ github.sha }} \
           --file Dockerfile  .
 
