@@ -22,6 +22,7 @@ jobs:
       # 3. Construir y subir imagen Docker a ACR
       - name: Construir y subir imagen Docker
         run: |
+          az account set --subscription "795c0803-b80b-4177-ad05-ab60ab92cb39"
           az acr build \
             --registry registryfilmware \
             --image frontend:${{ github.sha }} \
