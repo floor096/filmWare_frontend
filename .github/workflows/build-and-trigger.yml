@@ -13,32 +13,37 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Login a Azure
+      # 2. Configurar Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # 3. Login a Azure
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # 3. Construir y subir imagen Docker a ACR 
+      # 4. Login al ACR
+      - name: Login to ACR
+        run: |
+          az acr login --name registryfilmware
+
+      # 5. Construir, etiquetar y subir imagen Docker
       - name: Construir y subir imagen Docker
         run: |
-          az acr build \
-          --registry registryfilmware \
-          --resource-group grupo-recursos-filmware \
-          --image frontend:${{ github.sha }} \
-          --file Dockerfile  .
+          # Construir la imagen
+          docker build -t frontend:${{ github.sha }} -f Dockerfile .
+          
+          # Etiquetar para ACR
+          docker tag frontend:${{ github.sha }} registryfilmware.azurecr.io/frontend:${{ github.sha }}
+          
+          # Subir la imagen
+          docker push registryfilmware.azurecr.io/frontend:${{ github.sha }}
 
-      # 4. Disparar deploy en Repo B 
+      # 6. Disparar deploy en Repo B
       - name: Trigger deploy en Repo B
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_B_PAT }}
           repository: GastonNR/filmWare_devops
           event-type: trigger-deploy
-
-
-
-#Este workflow:
-#Construye la imagen Docker.
-#La sube a Azure Container Registry (ACR).
-#Dispara el pipeline de deploy en el Repo B.
