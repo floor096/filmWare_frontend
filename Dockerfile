@@ -5,4 +5,4 @@ EXPOSE 80
 
 #Explicación:
 #Copia todos los archivos estáticos a la carpeta de Nginx.
-#Cada página (ej: cines.html) será accesible via /cines.html.
+#Expone el puerto 80 para que la aplicación sea accesible.

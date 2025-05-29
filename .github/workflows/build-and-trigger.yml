@@ -28,7 +28,7 @@ jobs:
           --image frontend:${{ github.sha }} \
           --file Dockerfile  .
 
-      # 4. Disparar deploy en Repo B (vía repository_dispatch)
+      # 4. Disparar deploy en Repo B 
       - name: Trigger deploy en Repo B
         uses: peter-evans/repository-dispatch@v2
         with:
