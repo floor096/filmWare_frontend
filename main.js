@@ -27,9 +27,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
-
+    
     // Tabs de Login y Registro (login.html)
-
     const loginTabBtn = document.getElementById('loginTabBtn');
     const registerTabBtn = document.getElementById('registerTabBtn');
     const loginForm = document.getElementById('loginForm');
@@ -56,253 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-
-
-    // Validación Login
-    //const loginFormEl = document.getElementById('loginFormEl');
-
-    // if (loginFormEl) {
-    //     loginFormEl.addEventListener('submit', function (event) {
-    //         event.preventDefault();
-
-    //         const username = document.getElementById('username').value;
-    //         const password = document.getElementById('password').value;
-
-    //         if (username.trim() === '' || password.trim() === '') {
-    //             alert('Por favor completa todos los campos');
-    //             return;
-    //         }
-
-    //         //Lo anterior a la simulacion
-    //         // console.log('Iniciando sesión con:', { username, password });
-    //         // alert('Iniciando sesión... En un entorno real, esto conectaría con el servidor.');
-    //         // loginFormEl.reset();
-
-    //         // Simulación de autenticación
-    //         const tipo = username === 'admin' ? 'admin' : 'cliente'; // lógica ficticia
-    //         const usuario = {
-    //             nombre: username,
-    //             tipo: tipo
-    //         };
-    //         localStorage.setItem('usuarioFilmWare', JSON.stringify(usuario));
-            
-    //         alert("has ingresado");
-    //         // Redirigir
-    //         window.location.href = 'index.html';
-
-    //     });
-    // }
-
-
-    // ✅ Usuarios simulados (hardcodeados para pruebas locales)
-    // const usuariosSimulados = [
-    //     { username: 'admin', password: '1234', tipo: 'admin' },
-    //     { username: 'cliente', password: '1234', tipo: 'cliente' },
-    // ];
-
-    // if (loginFormEl) {
-    //     loginFormEl.addEventListener('submit', function (event) {
-    //         event.preventDefault();
-
-    //         const username = document.getElementById('username').value.trim();
-    //         const password = document.getElementById('password').value.trim();
-
-    //         if (!username || !password) {
-    //             alert('Por favor completa todos los campos');
-    //             return;
-    //         }
-
-    //         // ✅ Buscar usuario válido
-    //         const usuarioEncontrado = usuariosSimulados.find(
-    //             u => u.username === username && u.password === password
-    //         );
-
-    //         if (!usuarioEncontrado) {
-    //             alert('Usuario o contraseña incorrectos');
-    //             return;
-    //         }
-
-    //         // ✅ Guardar usuario en localStorage
-    //         const usuario = {
-    //             nombre: usuarioEncontrado.username,
-    //             tipo: usuarioEncontrado.tipo
-    //         };
-    //         localStorage.setItem('usuarioFilmWare', JSON.stringify(usuario));
-
-    //         alert('Has ingresado correctamente');
-    //         window.location.href = 'index.html'; // o redirigí a otra página según usuario
-    //     });
-    // }
-
-    // // Validación Registro
-    // const registerFormEl = document.getElementById('registerFormEl');
-
-    // if (registerFormEl) {
-    //     registerFormEl.addEventListener('submit', function (event) {
-    //         event.preventDefault();
-
-    //         const fullName = document.getElementById('fullName').value;
-    //         const email = document.getElementById('email').value;
-    //         const registerUsername = document.getElementById('registerUsername').value;
-    //         const registerPassword = document.getElementById('registerPassword').value;
-    //         const confirmPassword = document.getElementById('confirmPassword').value;
-    //         const userType = document.getElementById('userType')?.value;
-
-    //         if (
-    //             !fullName || !email || !registerUsername ||
-    //             !registerPassword || !confirmPassword
-    //         ) {
-    //             alert('Por favor completa todos los campos');
-    //             return;
-    //         }
-
-    //         if (registerPassword !== confirmPassword) {
-    //             alert('Las contraseñas no coinciden');
-    //             return;
-    //         }
-
-    //         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //         if (!emailRegex.test(email)) {
-    //             alert('Por favor ingresa un correo electrónico válido');
-    //             return;
-    //         }
-
-    //         console.log('Registrando usuario:', {
-    //             fullName,
-    //             email,
-    //             username: registerUsername,
-    //             password: registerPassword,
-    //             userType
-    //         });
-
-    //         alert('¡Registro exitoso! En un entorno real, esto conectaría con el servidor.');
-    //         registerFormEl.reset();
-    //         loginTabBtn?.click();
-    //     });
-    // }
-
-    // // Registro Cine y Sucursales
-    // if (registerForm) {
-    //     registerForm.addEventListener("submit", function (e) {
-    //         e.preventDefault(); // Evita el envío por defecto
-
-    //         const userType = document.getElementById("userType").value;
-
-    //         // Simulás guardar datos, mostrar mensaje, etc.
-    //         alert("Registro exitoso");
-
-    //         // Redireccionar según tipo de usuario
-    //         if (userType === "administrador") {
-    //             window.location.href = "registro-cine-sucursal.html";
-    //         } else {
-    //             window.location.href = "index.html";
-    //         }
-    //     });
-    // }
-
-    
-    //     //postman????
-    // // ========== LOGIN ==========
-    // const loginFormEl = document.getElementById('loginFormEl');
-    // if (loginFormEl) {
-    //     loginFormEl.addEventListener('submit', function (event) {
-    //         event.preventDefault();
-
-    //         const username = document.getElementById('username').value.trim();
-    //         const password = document.getElementById('password').value.trim();
-
-    //         if (!username || !password) {
-    //             alert('Por favor completa todos los campos');
-    //             return;
-    //         }
-
-    //         fetch('http://localhost:4000/api/auth/login', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({ username, password })
-    //         })
-    //             .then(res => res.json())
-    //             .then(data => {
-    //                 if (data.token) {
-    //                     // Guardar usuario logueado en localStorage
-    //                     localStorage.setItem('usuarioFilmWare', JSON.stringify(data.user));
-    //                     alert('Inicio de sesión exitoso');
-    //                     window.location.href = 'index.html';
-    //                 } else {
-    //                     alert(data.message || 'Usuario o contraseña incorrectos');
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error en login:', error);
-    //                 alert('Error al conectar con el servidor');
-    //             });
-    //     });
-    // }
-
-    // // ========== REGISTRO ==========
-    // const registerFormEl = document.getElementById('registerFormEl');
-    // if (registerFormEl) {
-    //     registerFormEl.addEventListener('submit', function (event) {
-    //         event.preventDefault();
-
-    //         const fullName = document.getElementById('fullName').value.trim();
-    //         const email = document.getElementById('email').value.trim();
-    //         const registerUsername = document.getElementById('registerUsername').value.trim();
-    //         const registerPassword = document.getElementById('registerPassword').value;
-    //         const confirmPassword = document.getElementById('confirmPassword').value;
-    //         const userType = document.getElementById('userType')?.value;
-
-    //         if (!fullName || !email || !registerUsername || !registerPassword || !confirmPassword) {
-    //             alert('Por favor completa todos los campos');
-    //             return;
-    //         }
-
-    //         if (registerPassword !== confirmPassword) {
-    //             alert('Las contraseñas no coinciden');
-    //             return;
-    //         }
-
-    //         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //         if (!emailRegex.test(email)) {
-    //             alert('Correo electrónico inválido');
-    //             return;
-    //         }
-
-    //         fetch('http://localhost:4000/api/auth/register', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({
-    //                 fullName,
-    //                 email,
-    //                 username: registerUsername,
-    //                 password: registerPassword,
-    //                 userType
-    //             })
-    //         })
-    //             .then(res => res.json())
-    //             .then(data => {
-    //                 if (res.ok) {
-    //                     alert('Registro exitoso');
-    //                     registerFormEl.reset();
-    //                     loginTabBtn?.click();
-    //                 } else {
-    //                     alert(data.message || 'Error al registrarse');
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error en registro:', error);
-    //                 alert('Error al conectar con el servidor');
-    //             });
-    //     });
-    // }
-
-    // ---------------------------  //
-    // ----FINAL -----------------  //
-
     const registerFormEl = document.getElementById('registerFormEl');
 
     if (registerFormEl) {
@@ -325,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             try {
-                const res = await fetch('http://localhost:4000/api/auth/register', {
+                const res = await fetch('http://localhost:3001/api/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -368,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             try {
-                const res = await fetch('http://localhost:4000/api/auth/login', {
+                const res = await fetch('http://localhost:3001/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
@@ -376,9 +128,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const data = await res.json();
 
-                if (res.ok) {
+                // if (res.ok) {
+                if (data.token) {
                     // Guardar sesión local
+                    // localStorage.setItem('usuarioFilmWare', JSON.stringify(data.user));
+                    // Guarda en localStorage
                     localStorage.setItem('usuarioFilmWare', JSON.stringify(data.user));
+                    localStorage.setItem('tokenFilmWare', data.token);
+                    // Actualiza el estado del usuario si estás utilizando un manejador de estado (por ejemplo, useState)
                     alert('Inicio de sesión exitoso');
 
                     // Redireccionar según tipo
