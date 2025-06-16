@@ -130,17 +130,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // if (res.ok) {
                 if (data.token) {
-                    // Guardar sesión local
-                    // localStorage.setItem('usuarioFilmWare', JSON.stringify(data.user));
                     // Guarda en localStorage
                     localStorage.setItem('usuarioFilmWare', JSON.stringify(data.user));
                     localStorage.setItem('tokenFilmWare', data.token);
-                    // Actualiza el estado del usuario si estás utilizando un manejador de estado (por ejemplo, useState)
+                    // Actualiza el estado del usuario
                     alert('Inicio de sesión exitoso');
 
                     // Redireccionar según tipo
                     if (data.user.tipo === 'admin') {
-                        window.location.href = 'registro-cine-sucursal.html';
+                        window.location.href = 'registro-sucursal.html';
                     } else {
                         window.location.href = 'index.html';
                     }
