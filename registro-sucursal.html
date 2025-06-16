@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Cines y Sucursales</title>
+    <title>Gestión de Sucursales</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="componentes/navbar.css">
@@ -230,28 +230,19 @@
 <body>
     <!-- Header -->
     <div id="navbar"></div>
+
     <!-- Container -->
     <div class="container">
         <div class="page-header">
-            <h1 class="page-title">Gestión de <span>Cines</span></h1>
+            <h1 class="page-title">Gestión de <span>Sucursales</span></h1>
         </div>
 
+        <!-- Formulario de registro de sucursal -->
         <div class="row">
-        
             <div class="col-lg-12">
-                <!-- Formulario de registro de sucursal -->
                 <div class="card">
                     <h3 class="card-title">Registrar Sucursal</h3>
                     <form id="sucursalForm">
-                        <div class="mb-3">
-                            <label for="cineSelect" class="form-label">Seleccionar Cine</label>
-                            <select class="form-select" id="cineSelect" name="cineId" required>
-                                <option value="" selected disabled>Seleccionar cine...</option>
-                                <option value="1">Cinépolis</option>
-                                <option value="2">Showcase</option>
-                                <option value="3">Hoyts</option>
-                            </select>
-                        </div>
                         
                         <div class="mb-3">
                             <label for="nombreSucursal" class="form-label">Nombre de la sucursal</label>
@@ -295,11 +286,6 @@
                                 <label for="provincia" class="form-label">Provincia</label>
                                 <input type="text" class="form-control" id="provincia" name="provincia" placeholder="Ej: CABA" required>
                             </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="codigoPostal" class="form-label">Código Postal</label>
-                            <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" placeholder="Ej: C1043AAZ">
                         </div>
                         
                         <div class="text-end mt-4 mb-2">

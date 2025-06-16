@@ -133,7 +133,6 @@
 </head>
 <body>
     <!-- Header -->
-     
     <div id="navbar"></div>
 
     <!-- User Profile Content -->
@@ -143,19 +142,19 @@
             <form id="profileForm">
                 <div class="mb-3">
                     <label for="username" class="form-label">Nombre de Usuario</label>
-                    <input type="text" class="form-control" id="username" value="usuario123">
+                    <input type="text" class="form-control" id="username" value="">
                 </div>
                 <div class="mb-3">
                     <label for="firstName" class="form-label">Nombres</label>
-                    <input type="text" class="form-control" id="firstName" value="Juan Carlos">
+                    <input type="text" class="form-control" id="firstName" value="">
                 </div>
                 <div class="mb-3">
                     <label for="lastName" class="form-label">Apellidos</label>
-                    <input type="text" class="form-control" id="lastName" value="García Pérez">
+                    <input type="text" class="form-control" id="lastName" value="">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="email" value="juan.garcia@ejemplo.com">
+                    <input type="email" class="form-control" id="email" value="">
                 </div>
                 <button type="submit" class="btn btn-update">Actualizar Cuenta</button>
             </form>
@@ -216,15 +215,54 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="include.js"></script>
     <script>
-        // Form validation and submission
+        // Al cargar la página, traemos los datos del usuario para llenar el formulario.
+        window.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token'); // Asegúrate de que el token esté guardado con la clave "token"
+            if (!token) {
+                alert('No estás autenticado. Por favor, inicia sesión.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            fetch('http://localhost:3001/api/profile', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Error en la petición del perfil.');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    // Asignamos los valores recibidos a los campos del formulario.
+                    document.getElementById('username').value = data.username;
+                    document.getElementById('firstName').value = data.first_name;
+                    document.getElementById('lastName').value = data.last_name;
+                    document.getElementById('email').value = data.email;
+                })
+                .catch(err => {
+                    console.error('Error al cargar el perfil:', err);
+                    alert('No se pudo cargar la información del perfil');
+                });
+        });
+        
+        // Actualización del perfil del usuario (envío del formulario).
         document.getElementById('profileForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             // Get form values
-            const username = document.getElementById('username').value;
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const email = document.getElementById('email').value;
+            // const username = document.getElementById('username').value;
+            // const firstName = document.getElementById('firstName').value;
+            // const lastName = document.getElementById('lastName').value;
+            // const email = document.getElementById('email').value;
+            // Obtener y validar los valores del formulario.
+            const username = document.getElementById('username').value.trim();
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
             
             // Basic validation
             if (!username || !firstName || !lastName || !email) {
@@ -238,11 +276,37 @@
                 alert('Por favor ingresa un correo electrónico válido');
                 return;
             }
-            
+
+            const token = localStorage.getItem('token');
+            const updatedProfile = { username, firstName, lastName, email };
+
+            fetch('http://localhost:3001/api/profile', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(updatedProfile)
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Error al actualizar el perfil.');
+                }
+                return res.json();
+            })
+            .then(response => {
+                showToast(response.message || 'Perfil actualizado correctamente');
+            })
+            .catch(err => {
+                console.error('Error al actualizar perfil:', err);
+                alert('No se pudo actualizar el perfil');
+            });
+        
             // If validation passes, show success message (in a real app, this would send data to server)
-            showToast('Información de perfil actualizada correctamente');
+            // showToast('Información de perfil actualizada correctamente');
         });
         
+        // Validación y envío para cambiar la contraseña.
         document.getElementById('passwordForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -269,14 +333,40 @@
                 return;
             }
             
-            // If validation passes, show success message (in a real app, this would send data to server)
-            document.getElementById('currentPassword').value = '';
-            document.getElementById('newPassword').value = '';
-            document.getElementById('confirmPassword').value = '';
-            showToast('Contraseña actualizada correctamente');
+            const token = localStorage.getItem('token');
+            fetch('http://localhost:3001/api/profile/password', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ currentPassword, newPassword })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Error al actualizar la contraseña.');
+                }
+                return res.json();
+            })
+            .then(response => {
+                // Reiniciamos los campos del formulario.
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                showToast(response.message || 'Contraseña actualizada correctamente');
+            })
+            .catch(err => {
+                console.error('Error al actualizar contraseña:', err);
+                alert('No se pudo actualizar la contraseña');
+            });
+            // // If validation passes, show success message (in a real app, this would send data to server)
+            // document.getElementById('currentPassword').value = '';
+            // document.getElementById('newPassword').value = '';
+            // document.getElementById('confirmPassword').value = '';
+            // showToast('Contraseña actualizada correctamente');
         });
         
-        // Account deletion
+        // Eliminación de la cuenta.
         document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
             const password = document.getElementById('confirmDeletePassword').value;
             
@@ -285,16 +375,45 @@
                 return;
             }
             
-            // In a real app, this would verify the password and then delete the account
-            // Here we just close the modal and show a success message
-            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteAccountModal'));
-            modal.hide();
+            const token = localStorage.getItem('token');
+            fetch('http://localhost:3001/api/profile', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ password })
+            })  
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Error al eliminar la cuenta.');
+                }
+                return res.json();
+            })
+            .then(response => {
+                // Cerramos el modal usando Bootstrap y mostramos la notificación.
+                const modal = bootstrap.Modal.getInstance(document.getElementById('deleteAccountModal'));
+                modal.hide();
+                showToast(response.message || 'Cuenta eliminada correctamente');
+                // Luego redirigimos a la página principal.
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            })
+            .catch(err => {
+                console.error('Error al eliminar la cuenta:', err);
+                alert('No se pudo eliminar la cuenta');
+            });
+            // // Aquí debería verificarse la contraseña y eliminar la cuenta en el backend.
+            // // Se cierra el modal y se muestra un mensaje (simulación).
+            // const modal = bootstrap.Modal.getInstance(document.getElementById('deleteAccountModal'));
+            // modal.hide();
             
-            // Redirect to homepage (or show a goodbye message)
-            setTimeout(() => {
-                alert('Tu cuenta ha sido eliminada. Serás redirigido a la página principal.');
-                window.location.href = 'index.html';
-            }, 1000);
+            // // Redirect to homepage (or show a goodbye message)
+            // setTimeout(() => {
+            //     alert('Tu cuenta ha sido eliminada. Serás redirigido a la página principal.');
+            //     window.location.href = 'index.html';
+            // }, 1000);
         });
         
         // Toast notification function (simplified)
