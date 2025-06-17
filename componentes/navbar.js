@@ -17,7 +17,7 @@ function actualizarNavbar() {
         if (usuario.tipo === "admin" || usuario.tipo === "administrador") {
             userMenu.innerHTML = `
           <li><a class="dropdown-item" href="perfil-usuario-page.html">Perfil</a></li>
-          <li><a class="dropdown-item" href="registro-sucursal.html">Registrar Cines y Sucursales</a></li>
+          <li><a class="dropdown-item" href="registro-sucursal.html">Registrar Sucursales</a></li>
           <li><a class="dropdown-item" href="formulario-peliculas.html">Añadir Películas</a></li>
           <li><a class="dropdown-item" href="formulario-funciones.html">Añadir Funciones</a></li>
           <li><hr class="dropdown-divider"></li>
